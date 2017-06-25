@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MessageAppModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="MessageAppModelStoreContainer">
+          <EntitySet Name="MessageType" EntityType="MessageAppModel.Store.MessageType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="NegotiationPhase" EntityType="MessageAppModel.Store.NegotiationPhase" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="NegPhaseMessages" EntityType="MessageAppModel.Store.NegPhaseMessages" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__NegPhaseM__Messa__08EA5793" Association="MessageAppModel.Store.FK__NegPhaseM__Messa__08EA5793">
+            <End Role="MessageType" EntitySet="MessageType" />
+            <End Role="NegPhaseMessages" EntitySet="NegPhaseMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NegPhaseM__Negot__09DE7BCC" Association="MessageAppModel.Store.FK__NegPhaseM__Negot__09DE7BCC">
+            <End Role="NegotiationPhase" EntitySet="NegotiationPhase" />
+            <End Role="NegPhaseMessages" EntitySet="NegPhaseMessages" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="MessageType">
+          <Key>
+            <PropertyRef Name="MessageTypeID" />
+          </Key>
+          <Property Name="MessageTypeID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MessageTypeName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Deleted" Type="bit" />
+          <Property Name="DeletedBy" Type="uniqueidentifier" />
+          <Property Name="DeletedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="NegotiationPhase">
+          <Key>
+            <PropertyRef Name="NegotiationPhaseID" />
+          </Key>
+          <Property Name="NegotiationPhaseID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="NegotiationPhaseName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Deleted" Type="bit" />
+          <Property Name="DeletedBy" Type="uniqueidentifier" />
+          <Property Name="DeletedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="NegPhaseMessages">
+          <Key>
+            <PropertyRef Name="NegPhaseMessagesID" />
+          </Key>
+          <Property Name="NegPhaseMessagesID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MessageTypeID" Type="uniqueidentifier" />
+          <Property Name="NegotiationPhaseID" Type="uniqueidentifier" />
+          <Property Name="MessageContent" Type="ntext" />
+          <Property Name="Deleted" Type="bit" />
+          <Property Name="DeletedBy" Type="uniqueidentifier" />
+          <Property Name="DeletedOn" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__NegPhaseM__Messa__08EA5793">
+          <End Role="MessageType" Type="MessageAppModel.Store.MessageType" Multiplicity="0..1" />
+          <End Role="NegPhaseMessages" Type="MessageAppModel.Store.NegPhaseMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MessageType">
+              <PropertyRef Name="MessageTypeID" />
+            </Principal>
+            <Dependent Role="NegPhaseMessages">
+              <PropertyRef Name="MessageTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NegPhaseM__Negot__09DE7BCC">
+          <End Role="NegotiationPhase" Type="MessageAppModel.Store.NegotiationPhase" Multiplicity="0..1" />
+          <End Role="NegPhaseMessages" Type="MessageAppModel.Store.NegPhaseMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NegotiationPhase">
+              <PropertyRef Name="NegotiationPhaseID" />
+            </Principal>
+            <Dependent Role="NegPhaseMessages">
+              <PropertyRef Name="NegotiationPhaseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetMappedKey" ReturnType="uniqueidentifier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TableName" Type="nvarchar" Mode="In" />
+          <Parameter Name="OLdKey" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="uspMessageTypeDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MessageTypeID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="uspMessageTypeInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MessageTypeID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="MessageTypeName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Deleted" Type="bit" Mode="In" />
+          <Parameter Name="DeletedBy" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="DeletedOn" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="uspMessageTypeSelect" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MessageTypeID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="uspMessageTypeUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MessageTypeID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="MessageTypeName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Deleted" Type="bit" Mode="In" />
+          <Parameter Name="DeletedBy" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="DeletedOn" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="uspNegoitationPhaseSelectAndTemplatesInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="uspNegotiationPhaseDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NegotiationPhaseID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="uspNegotiationPhaseInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NegotiationPhaseID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="NegotiationPhaseName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Deleted" Type="bit" Mode="In" />
+          <Parameter Name="DeletedBy" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="DeletedOn" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="uspNegotiationPhaseSelect" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NegotiationPhaseID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="uspNegotiationPhaseUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NegotiationPhaseID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="NegotiationPhaseName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Deleted" Type="bit" Mode="In" />
+          <Parameter Name="DeletedBy" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="DeletedOn" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="uspNegPhaseMessagesDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NegPhaseMessagesID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="uspNegPhaseMessagesInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NegPhaseMessagesID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="MessageTypeID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="NegotiationPhaseID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="MessageContent" Type="ntext" Mode="In" />
+          <Parameter Name="Deleted" Type="bit" Mode="In" />
+          <Parameter Name="DeletedBy" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="DeletedOn" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="uspNegPhaseMessagesSelect" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NegPhaseMessagesID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="uspNegPhaseMessagesUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NegPhaseMessagesID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="MessageTypeID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="NegotiationPhaseID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="MessageContent" Type="ntext" Mode="In" />
+          <Parameter Name="Deleted" Type="bit" Mode="In" />
+          <Parameter Name="DeletedBy" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="DeletedOn" Type="datetime" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MessageAppModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="MessageAppEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MessageTypes" EntityType="MessageAppModel.MessageType" />
+          <EntitySet Name="NegotiationPhases" EntityType="MessageAppModel.NegotiationPhase" />
+          <EntitySet Name="NegPhaseMessages" EntityType="MessageAppModel.NegPhaseMessage" />
+          <AssociationSet Name="FK__NegPhaseM__Messa__08EA5793" Association="MessageAppModel.FK__NegPhaseM__Messa__08EA5793">
+            <End Role="MessageType" EntitySet="MessageTypes" />
+            <End Role="NegPhaseMessages" EntitySet="NegPhaseMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NegPhaseM__Negot__09DE7BCC" Association="MessageAppModel.FK__NegPhaseM__Negot__09DE7BCC">
+            <End Role="NegotiationPhase" EntitySet="NegotiationPhases" />
+            <End Role="NegPhaseMessages" EntitySet="NegPhaseMessages" />
+          </AssociationSet>
+          <FunctionImport Name="ImportMessageTemplates">
+          <Parameter Name="UserID" Mode="In" Type="Guid" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="MessageType">
+          <Key>
+            <PropertyRef Name="MessageTypeID" />
+          </Key>
+          <Property Name="MessageTypeID" Type="Guid" Nullable="false" />
+          <Property Name="MessageTypeName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" />
+          <Property Name="DeletedBy" Type="Guid" />
+          <Property Name="DeletedOn" Type="DateTime" />
+          <NavigationProperty Name="NegPhaseMessages" Relationship="MessageAppModel.FK__NegPhaseM__Messa__08EA5793" FromRole="MessageType" ToRole="NegPhaseMessages" />
+        </EntityType>
+        <EntityType Name="NegotiationPhase">
+          <Key>
+            <PropertyRef Name="NegotiationPhaseID" />
+          </Key>
+          <Property Name="NegotiationPhaseID" Type="Guid" Nullable="false" />
+          <Property Name="NegotiationPhaseName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" />
+          <Property Name="DeletedBy" Type="Guid" />
+          <Property Name="DeletedOn" Type="DateTime" />
+          <NavigationProperty Name="NegPhaseMessages" Relationship="MessageAppModel.FK__NegPhaseM__Negot__09DE7BCC" FromRole="NegotiationPhase" ToRole="NegPhaseMessages" />
+        </EntityType>
+        <EntityType Name="NegPhaseMessage">
+          <Key>
+            <PropertyRef Name="NegPhaseMessagesID" />
+          </Key>
+          <Property Name="NegPhaseMessagesID" Type="Guid" Nullable="false" />
+          <Property Name="MessageTypeID" Type="Guid" />
+          <Property Name="NegotiationPhaseID" Type="Guid" />
+          <Property Name="MessageContent" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Deleted" Type="Boolean" />
+          <Property Name="DeletedBy" Type="Guid" />
+          <Property Name="DeletedOn" Type="DateTime" />
+          <NavigationProperty Name="MessageType" Relationship="MessageAppModel.FK__NegPhaseM__Messa__08EA5793" FromRole="NegPhaseMessages" ToRole="MessageType" />
+          <NavigationProperty Name="NegotiationPhase" Relationship="MessageAppModel.FK__NegPhaseM__Negot__09DE7BCC" FromRole="NegPhaseMessages" ToRole="NegotiationPhase" />
+        </EntityType>
+        <Association Name="FK__NegPhaseM__Messa__08EA5793">
+          <End Role="MessageType" Type="MessageAppModel.MessageType" Multiplicity="0..1" />
+          <End Role="NegPhaseMessages" Type="MessageAppModel.NegPhaseMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MessageType">
+              <PropertyRef Name="MessageTypeID" />
+            </Principal>
+            <Dependent Role="NegPhaseMessages">
+              <PropertyRef Name="MessageTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NegPhaseM__Negot__09DE7BCC">
+          <End Role="NegotiationPhase" Type="MessageAppModel.NegotiationPhase" Multiplicity="0..1" />
+          <End Role="NegPhaseMessages" Type="MessageAppModel.NegPhaseMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NegotiationPhase">
+              <PropertyRef Name="NegotiationPhaseID" />
+            </Principal>
+            <Dependent Role="NegPhaseMessages">
+              <PropertyRef Name="NegotiationPhaseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MessageAppModelStoreContainer" CdmEntityContainer="MessageAppEntities">
+          <EntitySetMapping Name="MessageTypes"><EntityTypeMapping TypeName="MessageAppModel.MessageType"><MappingFragment StoreEntitySet="MessageType">
+            <ScalarProperty Name="MessageTypeID" ColumnName="MessageTypeID" />
+            <ScalarProperty Name="MessageTypeName" ColumnName="MessageTypeName" />
+            <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+            <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+            <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          </MappingFragment></EntityTypeMapping>
+            <EntityTypeMapping TypeName="MessageAppModel.MessageType">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="MessageAppModel.Store.uspMessageTypeInsert">
+                  <ScalarProperty Name="DeletedOn" ParameterName="DeletedOn" />
+                  <ScalarProperty Name="DeletedBy" ParameterName="DeletedBy" />
+                  <ScalarProperty Name="Deleted" ParameterName="Deleted" />
+                  <ScalarProperty Name="MessageTypeName" ParameterName="MessageTypeName" />
+                  <ScalarProperty Name="MessageTypeID" ParameterName="MessageTypeID" />
+                </InsertFunction>
+                <UpdateFunction FunctionName="MessageAppModel.Store.uspMessageTypeUpdate">
+                  <ScalarProperty Name="DeletedOn" ParameterName="DeletedOn" Version="Current" />
+                  <ScalarProperty Name="DeletedBy" ParameterName="DeletedBy" Version="Current" />
+                  <ScalarProperty Name="Deleted" ParameterName="Deleted" Version="Current" />
+                  <ScalarProperty Name="MessageTypeName" ParameterName="MessageTypeName" Version="Current" />
+                  <ScalarProperty Name="MessageTypeID" ParameterName="MessageTypeID" Version="Current" />
+                </UpdateFunction>
+                <DeleteFunction FunctionName="MessageAppModel.Store.uspMessageTypeDelete">
+                  <ScalarProperty Name="MessageTypeID" ParameterName="MessageTypeID" />
+                </DeleteFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="NegotiationPhases"><EntityTypeMapping TypeName="MessageAppModel.NegotiationPhase"><MappingFragment StoreEntitySet="NegotiationPhase">
+            <ScalarProperty Name="NegotiationPhaseID" ColumnName="NegotiationPhaseID" />
+            <ScalarProperty Name="NegotiationPhaseName" ColumnName="NegotiationPhaseName" />
+            <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+            <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+            <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          </MappingFragment></EntityTypeMapping>
+            <EntityTypeMapping TypeName="MessageAppModel.NegotiationPhase">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="MessageAppModel.Store.uspNegotiationPhaseInsert">
+                  <ScalarProperty Name="DeletedOn" ParameterName="DeletedOn" />
+                  <ScalarProperty Name="DeletedBy" ParameterName="DeletedBy" />
+                  <ScalarProperty Name="Deleted" ParameterName="Deleted" />
+                  <ScalarProperty Name="NegotiationPhaseName" ParameterName="NegotiationPhaseName" />
+                  <ScalarProperty Name="NegotiationPhaseID" ParameterName="NegotiationPhaseID" />
+                </InsertFunction>
+                <UpdateFunction FunctionName="MessageAppModel.Store.uspNegotiationPhaseUpdate">
+                  <ScalarProperty Name="DeletedOn" ParameterName="DeletedOn" Version="Current" />
+                  <ScalarProperty Name="DeletedBy" ParameterName="DeletedBy" Version="Current" />
+                  <ScalarProperty Name="Deleted" ParameterName="Deleted" Version="Current" />
+                  <ScalarProperty Name="NegotiationPhaseName" ParameterName="NegotiationPhaseName" Version="Current" />
+                  <ScalarProperty Name="NegotiationPhaseID" ParameterName="NegotiationPhaseID" Version="Current" />
+                </UpdateFunction>
+                <DeleteFunction FunctionName="MessageAppModel.Store.uspNegotiationPhaseDelete">
+                  <ScalarProperty Name="NegotiationPhaseID" ParameterName="NegotiationPhaseID" />
+                </DeleteFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping>
+            </EntitySetMapping>
+          <EntitySetMapping Name="NegPhaseMessages"><EntityTypeMapping TypeName="MessageAppModel.NegPhaseMessage"><MappingFragment StoreEntitySet="NegPhaseMessages">
+            <ScalarProperty Name="NegPhaseMessagesID" ColumnName="NegPhaseMessagesID" />
+            <ScalarProperty Name="MessageTypeID" ColumnName="MessageTypeID" />
+            <ScalarProperty Name="NegotiationPhaseID" ColumnName="NegotiationPhaseID" />
+            <ScalarProperty Name="MessageContent" ColumnName="MessageContent" />
+            <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+            <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+            <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          </MappingFragment></EntityTypeMapping>
+            <EntityTypeMapping TypeName="MessageAppModel.NegPhaseMessage">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="MessageAppModel.Store.uspNegPhaseMessagesInsert">
+                  <ScalarProperty Name="DeletedOn" ParameterName="DeletedOn" />
+                  <ScalarProperty Name="DeletedBy" ParameterName="DeletedBy" />
+                  <ScalarProperty Name="Deleted" ParameterName="Deleted" />
+                  <ScalarProperty Name="MessageContent" ParameterName="MessageContent" />
+                  <ScalarProperty Name="NegotiationPhaseID" ParameterName="NegotiationPhaseID" />
+                  <ScalarProperty Name="MessageTypeID" ParameterName="MessageTypeID" />
+                  <ScalarProperty Name="NegPhaseMessagesID" ParameterName="NegPhaseMessagesID" />
+                </InsertFunction>
+                <UpdateFunction FunctionName="MessageAppModel.Store.uspNegPhaseMessagesUpdate">
+                  <ScalarProperty Name="DeletedOn" ParameterName="DeletedOn" Version="Current" />
+                  <ScalarProperty Name="DeletedBy" ParameterName="DeletedBy" Version="Current" />
+                  <ScalarProperty Name="Deleted" ParameterName="Deleted" Version="Current" />
+                  <ScalarProperty Name="MessageContent" ParameterName="MessageContent" Version="Current" />
+                  <ScalarProperty Name="NegotiationPhaseID" ParameterName="NegotiationPhaseID" Version="Current" />
+                  <ScalarProperty Name="MessageTypeID" ParameterName="MessageTypeID" Version="Current" />
+                  <ScalarProperty Name="NegPhaseMessagesID" ParameterName="NegPhaseMessagesID" Version="Current" />
+                </UpdateFunction>
+                <DeleteFunction FunctionName="MessageAppModel.Store.uspNegPhaseMessagesDelete">
+                  <ScalarProperty Name="NegPhaseMessagesID" ParameterName="NegPhaseMessagesID" />
+                </DeleteFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping></EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ImportMessageTemplates" FunctionName="MessageAppModel.Store.uspNegoitationPhaseSelectAndTemplatesInsert" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="MessageAppModel">
+        <EntityTypeShape EntityType="MessageAppModel.MessageType" Width="1.875" PointX="6.75" PointY="1" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="MessageAppModel.NegotiationPhase" Width="2.5" PointX="0.75" PointY="1.25" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="MessageAppModel.NegPhaseMessage" Width="1.875" PointX="4" PointY="1" Height="2.7494921874999996" IsExpanded="true" />
+        <AssociationConnector Association="MessageAppModel.FK__NegPhaseM__Messa__08EA5793" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="2.0862939453125" />
+          <ConnectorPoint PointX="5.875" PointY="2.0862939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="MessageAppModel.FK__NegPhaseM__Negot__09DE7BCC" ManuallyRouted="false">
+          <ConnectorPoint PointX="3.25" PointY="2.3362939453125" />
+          <ConnectorPoint PointX="4" PointY="2.3362939453125" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

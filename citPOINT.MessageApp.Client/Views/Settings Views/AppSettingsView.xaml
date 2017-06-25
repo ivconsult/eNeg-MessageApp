@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="citPOINT.MessageApp.Client.AppSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="300">
+
+    <Grid x:Name="LayoutRoot"
+          Background="White">
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal">
+            <telerik:RadComboBox x:Name="uxcboPhases"
+                                 IsEditable="True"
+                                 EmptyText="Select Phase..."
+                                 Margin="0,4,0,4"
+                                 SelectedIndex="-1"
+                                 Width="200"
+                                 ItemsSource="{Binding PhaseSource}"
+                                 SelectedItem="{Binding CurrentPhase,Mode=TwoWay}"
+                                 DisplayMemberPath="NegotiationPhaseName"
+                                 telerik:TextSearch.TextPath="NegotiationPhaseName" />
+
+            <HyperlinkButton Content="Manage Phases"
+                             HorizontalAlignment="Left"
+                             Margin="5,12"
+                             Command="{Binding OpenManagePhasesCommand}" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal">
+            <telerik:RadComboBox x:Name="uxcboTypes"
+                                 IsEditable="True"
+                                 EmptyText="Select Message Type..."
+                                 Margin="0,4,0,4"
+                                 SelectedIndex="-1"
+                                 Width="200"
+                                 ItemsSource="{Binding TypeSource}"
+                                 SelectedItem="{Binding CurrentType,Mode=TwoWay}"
+                                 DisplayMemberPath="MessageTypeName"
+                                 telerik:TextSearch.TextPath="MessageTypeName" />
+
+            <HyperlinkButton Content="Manage Types"
+                             HorizontalAlignment="Left"
+                             Margin="5,12"
+                             Command="{Binding OpenManageTypeViewCommand}" />
+
+        </StackPanel>
+
+        <TextBox Grid.Row="2"
+                 Margin="0,5,0,5"
+                 Height="170"
+                 AcceptsReturn="True"
+                 Text="{Binding MessageContent, Mode=TwoWay}" />
+
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal">
+            <telerik:RadButton Content="Copy to Clipboard"
+                               Height="25"
+                               Margin="0"
+                               Width="110"
+                               Command="{Binding CopyToClipboardCommand}" />
+
+            <telerik:RadButton Content="Generate e-mail"
+                               Height="25"
+                               Width="110"
+                               Margin="5,0,0,0"
+                               Command="{Binding GenerateEmailCommand}" />
+        </StackPanel>
+
+        <telerik:RadButton Content="Save"
+                           Height="25"
+                           Width="60"
+                           Margin="0"
+                           Grid.Row="3"
+                           HorizontalAlignment="Right"
+                           Command="{Binding SubmitChangeCommand}"
+                           CommandParameter="Message" />
+    </Grid>
+</UserControl>

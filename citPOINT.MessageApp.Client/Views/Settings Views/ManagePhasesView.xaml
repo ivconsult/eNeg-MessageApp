@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="citPOINT.MessageApp.Client.ManagePhasesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             MaxWidth="400">
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        
+        <telerik:RadButton Grid.Row="2"
+                            Content="Save"
+                            Width="130"
+                            Height="25"
+                            Margin="10,7"
+                            HorizontalAlignment="Right"
+                            Command="{Binding SubmitChangeCommand}"
+                            CommandParameter="Phase"/>
+
+        <telerik:RadButton Grid.Row="0"
+                            Content="Delete"
+                            Width="130"
+                            Height="25"
+                            Margin="10,7"
+                            HorizontalAlignment="Left"
+                            Command="{Binding DeletePhaseCommand}"/>
+
+        <telerik:RadGridView Grid.Row="1"
+                             Width="Auto"
+                             Height="210"
+                             HorizontalAlignment="Left"
+                             AutoGenerateColumns="False"            
+                             GridLinesVisibility="Horizontal"
+                             IsFilteringAllowed="False"
+                             IsReadOnly="True"
+                             ItemsSource="{Binding PhaseSource}"
+                             Margin="10,0,10,0"
+                             Name="uxPhasesGridView"
+                             ReorderColumnsMode="None"
+                             ScrollMode="Deferred"
+                             ShowGroupPanel="False"
+                             ShowInsertRow="False"
+                             ShowGroupFooters="False"
+                             ShowColumnHeaders="True"
+                             ShowColumnFooters="False"
+                             RowIndicatorVisibility="Collapsed">
+            <telerik:RadGridView.Columns>
+
+                <telerik:GridViewColumn UniqueName="SelectPhase"
+                                        IsResizable="False"
+                                        IsReorderable="False">
+                    <telerik:GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding Path=IsSelected,Mode=TwoWay}" />
+                        </DataTemplate>
+                    </telerik:GridViewColumn.CellTemplate>
+                </telerik:GridViewColumn>
+
+                <telerik:GridViewColumn UniqueName="PhaseName"
+                                        Header="Phase Name"
+                                        HeaderTextAlignment="Center"
+                                        Width="*">
+                    <telerik:GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding NegotiationPhaseName,Mode=TwoWay,ValidatesOnDataErrors=True,ValidatesOnExceptions=True,ValidatesOnNotifyDataErrors=True}"
+                                     TextWrapping="Wrap"
+                                     Name="uxtxtPhaseName"/>
+                        </DataTemplate>
+                    </telerik:GridViewColumn.CellTemplate>
+                </telerik:GridViewColumn>
+
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+
+        <telerik:RadButton Grid.Row="2"
+                            Content="Add New Phase"
+                            HorizontalAlignment="Left"
+                            Width="130"
+                            Height="25"
+                            Margin="10,7"
+                            Command="{Binding AddNewPhaseCommand}"/>
+    </Grid>
+</UserControl>
